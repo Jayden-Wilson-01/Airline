@@ -104,6 +104,8 @@ public class SystemManager
 
     public void deleteCustomer()
     {
+        //Todo: prevent customer being deleted unless referenced booking is deleted first
+
         String customerID = Utilities.readString("Enter customer ID: ");
 
         for (int i = 0; i < customers.size(); i++)
@@ -127,6 +129,8 @@ public class SystemManager
     //Add booking
     public void addBooking()
     {
+        //Todo: check if foreign keys refer to existing entry
+
         //Create empty booking
         Booking booking = new Booking();
 
@@ -172,6 +176,8 @@ public class SystemManager
     //Update booking
     public void updateBooking()
     {
+        //Todo: check if foreign keys refer to existing entry
+
         //Get values for new booking
         String bookingID = Utilities.readString("Enter existing booking ID: ");
         Date bookingDate = Utilities.readDate("Enter booking date: ");
@@ -304,6 +310,8 @@ public class SystemManager
     //Delete flight
     public void deleteFlight()
     {
+        //Todo: prevent flight being deleted unless referenced booking is deleted first
+
         String flightID = Utilities.readString("Enter flight ID: ");
 
         for (int i = 0; i < flights.size(); i++)
