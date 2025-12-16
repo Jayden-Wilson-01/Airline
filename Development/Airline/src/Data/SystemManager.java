@@ -59,14 +59,16 @@ public class SystemManager
                 Utilities.writeString("Customer email: " + customers.get(i).getEmail());
                 Utilities.writeString("Customer phone number: " + customers.get(i).getPhone());
                 Utilities.writeString("Customer address: " + customers.get(i).getAddress());
+                break;
 
             }
-            else
+            else if(i+1 == customers.size())
             {
-                //Todo: Fix iteration error
-                //Only checks the first item if the Customer ID is not the same then it doesn't continue.
+                /*
+                Doesn't require a break as this code executes at the final loop when there is no match
+                so there is no need to break early.
+                 */
                 Utilities.writeString("Customer ID: " + customerID + " Does not exist.");
-                break;
             }
         }
     }
@@ -92,12 +94,15 @@ public class SystemManager
                 customers.get(i).setEmail(customerEmail);
                 customers.get(i).setPhone(customerPhone);
                 customers.get(i).setAddress(customerAddress);
-            }
-            else
-            {
-                //Todo: Fix iteration error
-                Utilities.writeString("Customer ID: " + customerID + " Does not exist.");
                 break;
+            }
+            else if(i+1 == customers.size())
+            {
+                /*
+                Doesn't require a break as this code executes at the final loop when there is no match
+                so there is no need to break early.
+                 */
+                Utilities.writeString("Customer ID: " + customerID + " Does not exist.");
             }
         }
     }
@@ -114,12 +119,15 @@ public class SystemManager
             {
                 //Delete from list
                 customers.remove(i);
-            }
-            else
-            {
-                //Todo: Fix iteration error
-                Utilities.writeString("Customer ID: " + customerID + " Does not exist.");
                 break;
+            }
+            else if(i+1 == customers.size())
+            {
+                /*
+                Doesn't require a break as this code executes at the final loop when there is no match
+                so there is no need to break early.
+                 */
+                Utilities.writeString("Customer ID: " + customerID + " Does not exist.");
             }
         }
     }
@@ -163,12 +171,15 @@ public class SystemManager
                 Utilities.writeString("Booking date: " + bookings.get(i).getBookingDate());
                 Utilities.writeString("Booking flight ID: " + bookings.get(i).getFlightID());
                 Utilities.writeString("Booking customer ID: " + bookings.get(i).getCustomerID());
-            }
-            else
-            {
-                //Todo: Fix iteration error
-                Utilities.writeString("Booking ID: " + bookingID + " Does not exist.");
                 break;
+            }
+            else if(i+1 == bookings.size())
+            {
+                /*
+                Doesn't require a break as this code executes at the final loop when there is no match
+                so there is no need to break early.
+                 */
+                Utilities.writeString("Booking ID: " + bookingID + " Does not exist.");
             }
         }
     }
@@ -192,12 +203,15 @@ public class SystemManager
                 bookings.get(i).setBookingDate(bookingDate);
                 bookings.get(i).setCustomerID(customerID);
                 bookings.get(i).setFlightID(flightID);
-            }
-            else
-            {
-                //Todo: Fix iteration error
-                Utilities.writeString("Booking ID: " + bookingID + " Does not exist.");
                 break;
+            }
+            else if(i+1 == bookings.size())
+            {
+                /*
+                Doesn't require a break as this code executes at the final loop when there is no match
+                so there is no need to break early.
+                 */
+                Utilities.writeString("Booking ID: " + bookingID + " Does not exist.");
             }
         }
     }
@@ -213,12 +227,15 @@ public class SystemManager
             {
                 //Delete from list
                 bookings.remove(i);
-            }
-            else
-            {
-                //Todo: Fix iteration error
-                Utilities.writeString("Booking ID: " + bookingID + " Does not exist.");
                 break;
+            }
+            else if(i+1 == bookings.size())
+            {
+                /*
+                Doesn't require a break as this code executes at the final loop when there is no match
+                so there is no need to break early.
+                 */
+                Utilities.writeString("Booking ID: " + bookingID + " Does not exist.");
             }
         }
     }
@@ -236,16 +253,22 @@ public class SystemManager
         String flightNumber = Utilities.readString("Enter flight number: ");
         String departureAirport = Utilities.readString("Enter departure airport: ");
         String arrivalAirport = Utilities.readString("Enter arrival airport: ");
-        Date getDepartureDateTime = Utilities.readDate("Enter departure date: ");
-        Date getArrivalDepartureDateTime = Utilities.readDate("Enter arrival date: ");
+        Date departureDateTime = Utilities.readDate("Enter departure date: ");
+        Date arrivalDateTime;
+
+        do
+        {
+            arrivalDateTime = Utilities.readDate("Enter arrival date thats after departure date: ");
+        }
+        while(arrivalDateTime.before(departureDateTime));
 
         //Set values for the empty flight object
         flight.setFlightID(flightID);
         flight.setFlightNumber(flightNumber);
         flight.setDepartureAirport(departureAirport);
         flight.setArrivalAirport(arrivalAirport);
-        flight.setDepartureDateTime(getDepartureDateTime);
-        flight.setArrivalDateTime(getArrivalDepartureDateTime);
+        flight.setDepartureDateTime(departureDateTime);
+        flight.setArrivalDateTime(arrivalDateTime);
 
         //Add flight to list
         flights.add(flight);
@@ -266,12 +289,15 @@ public class SystemManager
                 Utilities.writeString("Arrival Airport: " + flights.get(i).getArrivalAirport());
                 Utilities.writeString("Departure Date: " + flights.get(i).getDepartureDateTime());
                 Utilities.writeString("Arrival Date: " + flights.get(i).getArrivalDateTime());
-            }
-            else
-            {
-                //Todo: Fix iteration error
-                Utilities.writeString("flight ID: " + flightID + " Does not exist.");
                 break;
+            }
+            else if(i+1 == flights.size())
+            {
+                /*
+                Doesn't require a break as this code executes at the final loop when there is no match
+                so there is no need to break early.
+                 */
+                Utilities.writeString("flight ID: " + flightID + " Does not exist.");
             }
         }
     }
@@ -284,8 +310,15 @@ public class SystemManager
         String flightNumber = Utilities.readString("Enter flight number: ");
         String departureAirport = Utilities.readString("Enter departure airport: ");
         String arrivalAirport = Utilities.readString("Enter arrival airport: ");
-        Date getDepartureDateTime = Utilities.readDate("Enter departure date: ");
-        Date getArrivalDepartureDateTime = Utilities.readDate("Enter arrival date: ");
+        Date departureDateTime = Utilities.readDate("Enter departure date: ");
+        Date arrivalDateTime;
+
+        do
+        {
+            arrivalDateTime = Utilities.readDate("Enter arrival date: ");
+        }
+        while(arrivalDateTime.before(departureDateTime));
+
 
         for (int i = 0; i < flights.size(); i++)
         {
@@ -295,14 +328,17 @@ public class SystemManager
                 flights.get(i).setFlightNumber(flightNumber);
                 flights.get(i).setDepartureAirport(departureAirport);
                 flights.get(i).setArrivalAirport(arrivalAirport);
-                flights.get(i).setDepartureDateTime(getDepartureDateTime);
-                flights.get(i).setArrivalDateTime(getArrivalDepartureDateTime);
-            }
-            else
-            {
-                //Todo: Fix iteration error
-                Utilities.writeString("Flight ID: " + flightID + " Does not exist.");
+                flights.get(i).setDepartureDateTime(departureDateTime);
+                flights.get(i).setArrivalDateTime(arrivalDateTime);
                 break;
+            }
+            else if(i+1 == flights.size())
+            {
+                /*
+                Doesn't require a break as this code executes at the final loop when there is no match
+                so there is no need to break early.
+                 */
+                Utilities.writeString("Flight ID: " + flightID + " Does not exist.");
             }
         }
     }
@@ -320,12 +356,15 @@ public class SystemManager
             {
                 //Delete from list
                 flights.remove(i);
-            }
-            else
-            {
-                //Todo: Fix iteration error
-                Utilities.writeString("Flight ID: " + flightID + " Does not exist.");
                 break;
+            }
+            else if(i+1 == flights.size())
+            {
+                /*
+                Doesn't require a break as this code executes at the final loop when there is no match
+                so there is no need to break early.
+                 */
+                Utilities.writeString("Flight ID: " + flightID + " Does not exist.");
             }
         }
     }
@@ -361,11 +400,15 @@ public class SystemManager
             {
                 Utilities.writeString("Route ID: " + routes.get(i).getRouteID());
                 Utilities.writeString("Route Name: " + routes.get(i).getRouteName());
-            }
-            else
-            {
-                Utilities.writeString("Route ID: " + routeID + " Does not exist.");
                 break;
+            }
+            else if(i+1 == routes.size())
+            {
+                /*
+                Doesn't require a break as this code executes at the final loop when there is no match
+                so there is no need to break early.
+                 */
+                Utilities.writeString("Route ID: " + routeID + " Does not exist.");
             }
         }
     }
@@ -383,12 +426,15 @@ public class SystemManager
             {
                 //Set new values
                 routes.get(i).setRouteName(routeName);
-            }
-            else
-            {
-                //Todo: Fix iteration error
-                Utilities.writeString("Route ID: " + routeID + " Does not exist.");
                 break;
+            }
+            else if(i+1 == routes.size())
+            {
+                /*
+                Doesn't require a break as this code executes at the final loop when there is no match
+                so there is no need to break early.
+                 */
+                Utilities.writeString("Route ID: " + routeID + " Does not exist.");
             }
         }
     }
@@ -404,12 +450,15 @@ public class SystemManager
             {
                 //Delete from list
                 routes.remove(i);
-            }
-            else
-            {
-                //Todo: Fix iteration error
-                Utilities.writeString("Route ID: " + routeID + " Does not exist.");
                 break;
+            }
+            else if(i+1 == routes.size())
+            {
+                /*
+                Doesn't require a break as this code executes at the final loop when there is no match
+                so there is no need to break early.
+                 */
+                Utilities.writeString("Route ID: " + routeID + " Does not exist.");
             }
         }
     }
