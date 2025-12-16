@@ -7,7 +7,7 @@ import java.util.Date;
 public class Route
 {
     private String routeID;
-    private Date routeName;
+    private String routeName;
 
     //<editor-fold desc="Get Functions">
     public String getRouteID()
@@ -15,7 +15,7 @@ public class Route
         return routeID;
     }
 
-    public Date getRouteName()
+    public String getRouteName()
     {
         return routeName;
     }
@@ -30,7 +30,7 @@ public class Route
         }
     }
 
-    public void setRouteName(Date routeName)
+    public void setRouteName(String routeName)
     {
         this.routeName = routeName;
     }

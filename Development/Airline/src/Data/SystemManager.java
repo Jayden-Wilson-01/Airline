@@ -63,6 +63,8 @@ public class SystemManager
             }
             else
             {
+                //Todo: Fix iteration error
+                //Only checks the first item if the Customer ID is not the same then it doesn't continue.
                 Utilities.writeString("Customer ID: " + customerID + " Does not exist.");
                 break;
             }
@@ -93,6 +95,7 @@ public class SystemManager
             }
             else
             {
+                //Todo: Fix iteration error
                 Utilities.writeString("Customer ID: " + customerID + " Does not exist.");
                 break;
             }
@@ -107,11 +110,12 @@ public class SystemManager
         {
             if(customers.get(i).getCustomerID().equals(customerID))
             {
-                //Set new values
+                //Delete from list
                 customers.remove(i);
             }
             else
             {
+                //Todo: Fix iteration error
                 Utilities.writeString("Customer ID: " + customerID + " Does not exist.");
                 break;
             }
@@ -120,7 +124,7 @@ public class SystemManager
     //</editor-fold>
 
     //<editor-fold desc="Booking Functions">
-    //Add customer
+    //Add booking
     public void addBooking()
     {
         //Create empty booking
@@ -142,7 +146,7 @@ public class SystemManager
         bookings.add(booking);
     }
 
-    //View customer details
+    //View booking details
     public void viewBooking()
     {
         String bookingID = Utilities.readString("Enter booking ID: ");
@@ -158,13 +162,14 @@ public class SystemManager
             }
             else
             {
+                //Todo: Fix iteration error
                 Utilities.writeString("Booking ID: " + bookingID + " Does not exist.");
                 break;
             }
         }
     }
 
-    //Add customer
+    //Update booking
     public void updateBooking()
     {
         //Get values for new booking
@@ -184,12 +189,14 @@ public class SystemManager
             }
             else
             {
+                //Todo: Fix iteration error
                 Utilities.writeString("Booking ID: " + bookingID + " Does not exist.");
                 break;
             }
         }
     }
 
+    //Delete booking
     public void deleteBooking()
     {
         String bookingID = Utilities.readString("Enter booking ID: ");
@@ -198,12 +205,202 @@ public class SystemManager
         {
             if(bookings.get(i).getBookingID().equals(bookingID))
             {
-                //Set new values
+                //Delete from list
                 bookings.remove(i);
             }
             else
             {
+                //Todo: Fix iteration error
                 Utilities.writeString("Booking ID: " + bookingID + " Does not exist.");
+                break;
+            }
+        }
+    }
+    //</editor-fold>
+
+    //<editor-fold desc="Flight Functions">
+    //Add flight
+    public void addflight()
+    {
+        //Create empty flight
+        Flight flight = new Flight();
+
+        //Get values for flight
+        String flightID = Utilities.readString("Enter flight ID: ");
+        String flightNumber = Utilities.readString("Enter flight number: ");
+        String departureAirport = Utilities.readString("Enter departure airport: ");
+        String arrivalAirport = Utilities.readString("Enter arrival airport: ");
+        Date getDepartureDateTime = Utilities.readDate("Enter departure date: ");
+        Date getArrivalDepartureDateTime = Utilities.readDate("Enter arrival date: ");
+
+        //Set values for the empty flight object
+        flight.setFlightID(flightID);
+        flight.setFlightNumber(flightNumber);
+        flight.setDepartureAirport(departureAirport);
+        flight.setArrivalAirport(arrivalAirport);
+        flight.setDepartureDateTime(getDepartureDateTime);
+        flight.setArrivalDateTime(getArrivalDepartureDateTime);
+
+        //Add flight to list
+        flights.add(flight);
+    }
+
+    //View flight details
+    public void viewFlight()
+    {
+        String flightID = Utilities.readString("Enter flight ID: ");
+
+        for (int i = 0; i < flights.size(); i++)
+        {
+            if(flights.get(i).getFlightID().equals(flightID))
+            {
+                Utilities.writeString("Flight ID: " + flights.get(i).getFlightID());
+                Utilities.writeString("Flight number: " + flights.get(i).getFlightNumber());
+                Utilities.writeString("Departure Airport: " + flights.get(i).getDepartureAirport());
+                Utilities.writeString("Arrival Airport: " + flights.get(i).getArrivalAirport());
+                Utilities.writeString("Departure Date: " + flights.get(i).getDepartureDateTime());
+                Utilities.writeString("Arrival Date: " + flights.get(i).getArrivalDateTime());
+            }
+            else
+            {
+                //Todo: Fix iteration error
+                Utilities.writeString("flight ID: " + flightID + " Does not exist.");
+                break;
+            }
+        }
+    }
+
+    //Update flight
+    public void updateFlight()
+    {
+        //Get values for new booking
+        String flightID = Utilities.readString("Enter existing flight ID: ");
+        String flightNumber = Utilities.readString("Enter flight number: ");
+        String departureAirport = Utilities.readString("Enter departure airport: ");
+        String arrivalAirport = Utilities.readString("Enter arrival airport: ");
+        Date getDepartureDateTime = Utilities.readDate("Enter departure date: ");
+        Date getArrivalDepartureDateTime = Utilities.readDate("Enter arrival date: ");
+
+        for (int i = 0; i < flights.size(); i++)
+        {
+            if(flights.get(i).getFlightID().equals(flightID))
+            {
+                //Set new values
+                flights.get(i).setFlightNumber(flightNumber);
+                flights.get(i).setDepartureAirport(departureAirport);
+                flights.get(i).setArrivalAirport(arrivalAirport);
+                flights.get(i).setDepartureDateTime(getDepartureDateTime);
+                flights.get(i).setArrivalDateTime(getArrivalDepartureDateTime);
+            }
+            else
+            {
+                //Todo: Fix iteration error
+                Utilities.writeString("Flight ID: " + flightID + " Does not exist.");
+                break;
+            }
+        }
+    }
+
+    //Delete flight
+    public void deleteFlight()
+    {
+        String flightID = Utilities.readString("Enter flight ID: ");
+
+        for (int i = 0; i < flights.size(); i++)
+        {
+            if(flights.get(i).getFlightID().equals(flightID))
+            {
+                //Delete from list
+                flights.remove(i);
+            }
+            else
+            {
+                //Todo: Fix iteration error
+                Utilities.writeString("Flight ID: " + flightID + " Does not exist.");
+                break;
+            }
+        }
+    }
+    //</editor-fold>
+
+    //<editor-fold desc="Route Functions">
+    //Add route
+    public void addRoute()
+    {
+        //Create empty route
+        Route route = new Route();
+
+        //Get values for route
+        String routeID = Utilities.readString("Enter route ID: ");
+        String routeName = Utilities.readString("Enter route name: ");
+
+        //Set values for the empty route object
+        route.setRouteID(routeID);
+        route.setRouteName(routeName);
+
+        //Add route to list
+        routes.add(route);
+    }
+
+    //View route details
+    public void viewRoute()
+    {
+        String routeID = Utilities.readString("Enter route ID: ");
+
+        for (int i = 0; i < routes.size(); i++)
+        {
+            if(routes.get(i).getRouteID().equals(routeID))
+            {
+                Utilities.writeString("Route ID: " + routes.get(i).getRouteID());
+                Utilities.writeString("Route Name: " + routes.get(i).getRouteName());
+            }
+            else
+            {
+                Utilities.writeString("Route ID: " + routeID + " Does not exist.");
+                break;
+            }
+        }
+    }
+
+    //Update route
+    public void updateRoute()
+    {
+        //Get values for new route
+        String routeID = Utilities.readString("Enter existing route ID: ");
+        String routeName = Utilities.readString("Enter route name: ");
+
+        for (int i = 0; i < routes.size(); i++)
+        {
+            if(routes.get(i).getRouteID().equals(routeID))
+            {
+                //Set new values
+                routes.get(i).setRouteName(routeName);
+            }
+            else
+            {
+                //Todo: Fix iteration error
+                Utilities.writeString("Route ID: " + routeID + " Does not exist.");
+                break;
+            }
+        }
+    }
+
+    //Delete route
+    public void deleteRoute()
+    {
+        String routeID = Utilities.readString("Enter route ID: ");
+
+        for (int i = 0; i < routes.size(); i++)
+        {
+            if(routes.get(i).getRouteID().equals(routeID))
+            {
+                //Delete from list
+                routes.remove(i);
+            }
+            else
+            {
+                //Todo: Fix iteration error
+                Utilities.writeString("Route ID: " + routeID + " Does not exist.");
                 break;
             }
         }
