@@ -17,20 +17,90 @@ public class SystemManager
     List<Flight> flights = new ArrayList<Flight>();
     List<Route> routes = new ArrayList<Route>();
 
+    //Check if customer id exists
+    private Customer checkCustomerExists(String customerId)
+    {
+        for (int i = 0; i < customers.size(); i++)
+        {
+            if (customers.get(i).getCustomerID().equals(customerId))
+            {
+                return customers.get(i);  // match found
+            }
+        }
+
+        return null; // no match
+    }
+
+    //Check if booking id exists
+    private Booking checkBookingExists(String bookingId)
+    {
+        for (int i = 0; i < bookings.size(); i++)
+        {
+            if (bookings.get(i).getBookingID().equals(bookingId))
+            {
+                return bookings.get(i);  // match found
+            }
+        }
+
+        return null; // no match
+    }
+
+    //Check if flight id exists
+    private Flight checkFlightExists(String flightId)
+    {
+        for (int i = 0; i < flights.size(); i++)
+        {
+            if (flights.get(i).getFlightID().equals(flightId))
+            {
+                return flights.get(i);  // match found
+            }
+        }
+
+        return null; // no match
+    }
+
+    //Check if route id exists
+    private Route checkRouteExists(String routeId)
+    {
+        for (int i = 0; i < routes.size(); i++)
+        {
+            if (routes.get(i).getRouteID().equals(routeId))
+            {
+                return routes.get(i);  // match found
+            }
+        }
+
+        return null; // no match
+    }
+
     //<editor-fold desc="Customer Functions">
+    //Customer list to CSV
+    public void customersToCSV()
+    {
+        CsvExporter.writeCustomersToCsv(customers, "customers.csv");
+    }
+
     //Add customer
     public void addCustomer()
     {
-        //Create empty customer
-        Customer customer = new Customer();
+        //Get customer id
+        String customerID;
 
-        //Get values for customer
-        String customerID = Utilities.readString("Enter customer ID: ");
+        do
+        {
+            customerID = Utilities.readString("Enter customer id: ");
+        }
+        while(checkCustomerExists(customerID) != null); //if it exists keep asking for id
+
+        //Get rest of the details
         String customerFirstName = Utilities.readString("Enter customer name: ");
         String customerLastName = Utilities.readString("Enter customer last name: ");
         String customerEmail = Utilities.readString("Enter customer email: ");
         String customerPhone = Utilities.readString("Enter customer phone: ");
         String customerAddress = Utilities.readString("Enter customer address: ");
+
+        //Create customer
+        Customer customer = new Customer();
 
         //Set values for the empty customer object
         customer.setCustomerID(customerID);
@@ -47,209 +117,218 @@ public class SystemManager
     //View customer details
     public void viewCustomer()
     {
-        String customerID = Utilities.readString("Enter customer ID: ");
+        //Get customer id
+        String customerID;
+        Customer customer;
 
-        for (int i = 0; i < customers.size(); i++)
+        do
         {
-            if(customers.get(i).getCustomerID().equals(customerID))
-            {
-                Utilities.writeString("Customer ID: " + customers.get(i).getCustomerID());
-                Utilities.writeString("Customer first name: " + customers.get(i).getFirstName());
-                Utilities.writeString("Customer last name: " + customers.get(i).getLastName());
-                Utilities.writeString("Customer email: " + customers.get(i).getEmail());
-                Utilities.writeString("Customer phone number: " + customers.get(i).getPhone());
-                Utilities.writeString("Customer address: " + customers.get(i).getAddress());
-                break;
-
-            }
-            else if(i+1 == customers.size())
-            {
-                /*
-                Doesn't require a break as this code executes at the final loop when there is no match
-                so there is no need to break early.
-                 */
-                Utilities.writeString("Customer ID: " + customerID + " Does not exist.");
-            }
+            customerID = Utilities.readString("Enter customer id: ");
+            customer = checkCustomerExists(customerID);
         }
+        while(customer == null); //if it doesn't exist keep asking for id
+
+        //Display customer details
+        Utilities.writeString("Customer ID: " + customer.getCustomerID());
+        Utilities.writeString("Customer first name: " + customer.getFirstName());
+        Utilities.writeString("Customer last name: " + customer.getLastName());
+        Utilities.writeString("Customer email: " + customer.getEmail());
+        Utilities.writeString("Customer phone number: " + customer.getPhone());
+        Utilities.writeString("Customer address: " + customer.getAddress());
     }
 
     //Add customer
     public void updateCustomer()
     {
+        //Get customer id
+        String customerID;
+        Customer customer;
+
+        do
+        {
+            customerID = Utilities.readString("Enter customer id: ");
+            customer = checkCustomerExists(customerID);
+        }
+        while(customer == null); //if it doesn't exist keep asking for id
+
         //Get values for new customer
-        String customerID = Utilities.readString("Enter existing customer ID: ");
         String customerFirstName = Utilities.readString("Enter new customer name: ");
         String customerLastName = Utilities.readString("Enter new customer last name: ");
         String customerEmail = Utilities.readString("Enter new customer email: ");
         String customerPhone = Utilities.readString("Enter new customer phone: ");
         String customerAddress = Utilities.readString("Enter new customer address: ");
 
-        for (int i = 0; i < customers.size(); i++)
-        {
-            if(customers.get(i).getCustomerID().equals(customerID))
-            {
-                //Set new values
-                customers.get(i).setFirstName(customerFirstName);
-                customers.get(i).setLastName(customerLastName);
-                customers.get(i).setEmail(customerEmail);
-                customers.get(i).setPhone(customerPhone);
-                customers.get(i).setAddress(customerAddress);
-                break;
-            }
-            else if(i+1 == customers.size())
-            {
-                /*
-                Doesn't require a break as this code executes at the final loop when there is no match
-                so there is no need to break early.
-                 */
-                Utilities.writeString("Customer ID: " + customerID + " Does not exist.");
-            }
-        }
+        customer.setFirstName(customerFirstName);
+        customer.setLastName(customerLastName);
+        customer.setEmail(customerEmail);
+        customer.setPhone(customerPhone);
+        customer.setAddress(customerAddress);
     }
 
     public void deleteCustomer()
     {
         //Todo: prevent customer being deleted unless referenced booking is deleted first
 
-        String customerID = Utilities.readString("Enter customer ID: ");
+        //Get customer id
+        String customerID;
+        Customer customer;
 
-        for (int i = 0; i < customers.size(); i++)
+        do
         {
-            if(customers.get(i).getCustomerID().equals(customerID))
-            {
-                //Delete from list
-                customers.remove(i);
-                break;
-            }
-            else if(i+1 == customers.size())
-            {
-                /*
-                Doesn't require a break as this code executes at the final loop when there is no match
-                so there is no need to break early.
-                 */
-                Utilities.writeString("Customer ID: " + customerID + " Does not exist.");
-            }
+            customerID = Utilities.readString("Enter customer id: ");
+            customer = checkCustomerExists(customerID);
         }
+        while(customer == null); //if it doesn't exist keep asking for id
+
+        customers.remove(customer);
     }
     //</editor-fold>
 
     //<editor-fold desc="Booking Functions">
+    //Bookings list to CSV
+    public void bookingsToCSV()
+    {
+        CsvExporter.writeBookingsToCsv(bookings, "bookings.csv");
+    }
+
     //Add booking
     public void addBooking()
     {
-        //Todo: check if foreign keys refer to existing entry
+        //Get booking id
+        String bookingID;
+        do
+        {
+            bookingID = Utilities.readString("Enter new booking id: ");
+        }
+        while(checkBookingExists(bookingID) != null); //if it exists keep asking for id
 
-        //Create empty booking
+        //Get customer id
+        String customerID;
+        Customer customer;
+        do
+        {
+            customerID = Utilities.readString("Enter customer id: ");
+            customer = checkCustomerExists(customerID);
+        }
+        while(customer == null); //if it doesn't exist keep asking for id
+
+        //Get flight id
+        String flightId;
+        Flight flight;
+        do
+        {
+            flightId = Utilities.readString("Enter flight id: ");
+            flight = checkFlightExists(flightId);
+        }
+        while(flight == null); //if it doesn't exist keep asking for id
+
         Booking booking = new Booking();
-
-        //Get values for booking
-        String bookingID = Utilities.readString("Enter booking ID: ");
-        Date bookingDate = Utilities.readDate("Enter booking date: ");
-        String customerID = Utilities.readString("Enter customer ID: ");
-        String flightID = Utilities.readString("Enter flight ID: ");
-
-        //Set values for the empty booking object
         booking.setBookingID(bookingID);
-        booking.setBookingDate(bookingDate);
-        booking.setCustomerID(customerID);
-        booking.setFlightID(flightID);
-
-        //Add booking to list
+        booking.setCustomerID(customer.getCustomerID());
+        booking.setFlightID(flight.getFlightID());
+        booking.setBookingDate(Utilities.readDate("Enter booking date: "));
         bookings.add(booking);
+
     }
 
     //View booking details
     public void viewBooking()
     {
-        String bookingID = Utilities.readString("Enter booking ID: ");
+        //Get booking id
+        String bookingId;
+        Booking booking;
 
-        for (int i = 0; i < bookings.size(); i++)
+        do
         {
-            if(bookings.get(i).getBookingID().equals(bookingID))
-            {
-                Utilities.writeString("Booking ID: " + bookings.get(i).getBookingID());
-                Utilities.writeString("Booking date: " + bookings.get(i).getBookingDate());
-                Utilities.writeString("Booking flight ID: " + bookings.get(i).getFlightID());
-                Utilities.writeString("Booking customer ID: " + bookings.get(i).getCustomerID());
-                break;
-            }
-            else if(i+1 == bookings.size())
-            {
-                /*
-                Doesn't require a break as this code executes at the final loop when there is no match
-                so there is no need to break early.
-                 */
-                Utilities.writeString("Booking ID: " + bookingID + " Does not exist.");
-            }
+            bookingId = Utilities.readString("Enter booking id: ");
+            booking = checkBookingExists(bookingId);
         }
+        while(booking == null); //if it doesn't exist keep asking for id
+
+        //Display customer details
+        Utilities.writeString("Booking ID: " + booking.getBookingID());
+        Utilities.writeString("Customer ID: " + booking.getCustomerID());
+        Utilities.writeString("Flight ID: " + booking.getFlightID());
+        Utilities.writeString("]Booking Date: " + booking.getBookingDate());
     }
 
     //Update booking
     public void updateBooking()
     {
-        //Todo: check if foreign keys refer to existing entry
-
-        //Get values for new booking
-        String bookingID = Utilities.readString("Enter existing booking ID: ");
-        Date bookingDate = Utilities.readDate("Enter booking date: ");
-        String customerID = Utilities.readString("Enter new customer ID: ");
-        String flightID = Utilities.readString("Enter new flight ID: ");
-
-        for (int i = 0; i < bookings.size(); i++)
+        //Get booking id
+        String bookingID;
+        Booking booking;
+        do
         {
-            if(bookings.get(i).getBookingID().equals(bookingID))
-            {
-                //Set new values
-                bookings.get(i).setBookingDate(bookingDate);
-                bookings.get(i).setCustomerID(customerID);
-                bookings.get(i).setFlightID(flightID);
-                break;
-            }
-            else if(i+1 == bookings.size())
-            {
-                /*
-                Doesn't require a break as this code executes at the final loop when there is no match
-                so there is no need to break early.
-                 */
-                Utilities.writeString("Booking ID: " + bookingID + " Does not exist.");
-            }
+            bookingID = Utilities.readString("Enter booking id: ");
+            booking = checkBookingExists(bookingID);
         }
+        while(booking == null); //if it doesn't exist keep asking for id
+
+        //Get customer id
+        String customerID;
+        Customer customer;
+        do
+        {
+            customerID = Utilities.readString("Enter customer id: ");
+            customer = checkCustomerExists(customerID);
+        }
+        while(customer == null); //if it doesn't exist keep asking for id
+
+        //Get flight id
+        String flightId;
+        Flight flight;
+        do
+        {
+            flightId = Utilities.readString("Enter flight id: ");
+            flight = checkFlightExists(flightId);
+        }
+        while(flight == null); //if it doesn't exist keep asking for id
+
+        booking.setBookingDate(Utilities.readDate("Enter booking date: "));
+
+        booking.setBookingID(bookingID);
+        booking.setCustomerID(customer.getCustomerID());
+        booking.setFlightID(flight.getFlightID());
     }
 
     //Delete booking
     public void deleteBooking()
     {
-        String bookingID = Utilities.readString("Enter booking ID: ");
-
-        for (int i = 0; i < bookings.size(); i++)
+        //Get booking id
+        String bookingID;
+        Booking booking;
+        do
         {
-            if(bookings.get(i).getBookingID().equals(bookingID))
-            {
-                //Delete from list
-                bookings.remove(i);
-                break;
-            }
-            else if(i+1 == bookings.size())
-            {
-                /*
-                Doesn't require a break as this code executes at the final loop when there is no match
-                so there is no need to break early.
-                 */
-                Utilities.writeString("Booking ID: " + bookingID + " Does not exist.");
-            }
+            bookingID = Utilities.readString("Enter booking id: ");
+            booking = checkBookingExists(bookingID);
         }
+        while(booking == null); //if it doesn't exist keep asking for id
+
+        bookings.remove(booking);
     }
     //</editor-fold>
 
     //<editor-fold desc="Flight Functions">
+    //Flights list to CSV
+    public void flightsToCSV()
+    {
+        CsvExporter.writeFlightsToCsv(flights, "flights.csv");
+    }
+
     //Add flight
     public void addflight()
     {
-        //Create empty flight
-        Flight flight = new Flight();
+        //Get flight id
+        String flightID;
+
+        do
+        {
+            flightID = Utilities.readString("Enter flight id: ");
+        }
+        while(checkFlightExists(flightID) != null); //if it exists keep asking for id
 
         //Get values for flight
-        String flightID = Utilities.readString("Enter flight ID: ");
         String flightNumber = Utilities.readString("Enter flight number: ");
         String departureAirport = Utilities.readString("Enter departure airport: ");
         String arrivalAirport = Utilities.readString("Enter arrival airport: ");
@@ -263,6 +342,7 @@ public class SystemManager
         while(arrivalDateTime.before(departureDateTime));
 
         //Set values for the empty flight object
+        Flight flight = new Flight();
         flight.setFlightID(flightID);
         flight.setFlightNumber(flightNumber);
         flight.setDepartureAirport(departureAirport);
@@ -277,36 +357,41 @@ public class SystemManager
     //View flight details
     public void viewFlight()
     {
-        String flightID = Utilities.readString("Enter flight ID: ");
+        //Get flight id
+        String flightID;
+        Flight flight;
 
-        for (int i = 0; i < flights.size(); i++)
+        do
         {
-            if(flights.get(i).getFlightID().equals(flightID))
-            {
-                Utilities.writeString("Flight ID: " + flights.get(i).getFlightID());
-                Utilities.writeString("Flight number: " + flights.get(i).getFlightNumber());
-                Utilities.writeString("Departure Airport: " + flights.get(i).getDepartureAirport());
-                Utilities.writeString("Arrival Airport: " + flights.get(i).getArrivalAirport());
-                Utilities.writeString("Departure Date: " + flights.get(i).getDepartureDateTime());
-                Utilities.writeString("Arrival Date: " + flights.get(i).getArrivalDateTime());
-                break;
-            }
-            else if(i+1 == flights.size())
-            {
-                /*
-                Doesn't require a break as this code executes at the final loop when there is no match
-                so there is no need to break early.
-                 */
-                Utilities.writeString("flight ID: " + flightID + " Does not exist.");
-            }
+            flightID = Utilities.readString("Enter flight id: ");
+            flight = checkFlightExists(flightID);
         }
+        while(flight == null); //if it doesn't exist keep asking for id
+
+        Utilities.writeString("Flight ID: " + flight.getFlightID());
+        Utilities.writeString("Flight number: " + flight.getFlightNumber());
+        Utilities.writeString("Departure Airport: " + flight.getDepartureAirport());
+        Utilities.writeString("Arrival Airport: " + flight.getArrivalAirport());
+        Utilities.writeString("Departure Date: " + flight.getDepartureDateTime());
+        Utilities.writeString("Arrival Date: " + flight.getArrivalDateTime());
     }
 
     //Update flight
     public void updateFlight()
     {
+        //Get flight id
+        String flightID;
+        Flight flight;
+
+        do
+        {
+            flightID = Utilities.readString("Enter flight id: ");
+            flight = checkFlightExists(flightID);
+        }
+        while(flight == null); //if it doesn't exist keep asking for id
+
+
         //Get values for new booking
-        String flightID = Utilities.readString("Enter existing flight ID: ");
         String flightNumber = Utilities.readString("Enter flight number: ");
         String departureAirport = Utilities.readString("Enter departure airport: ");
         String arrivalAirport = Utilities.readString("Enter arrival airport: ");
@@ -319,28 +404,12 @@ public class SystemManager
         }
         while(arrivalDateTime.before(departureDateTime));
 
-
-        for (int i = 0; i < flights.size(); i++)
-        {
-            if(flights.get(i).getFlightID().equals(flightID))
-            {
-                //Set new values
-                flights.get(i).setFlightNumber(flightNumber);
-                flights.get(i).setDepartureAirport(departureAirport);
-                flights.get(i).setArrivalAirport(arrivalAirport);
-                flights.get(i).setDepartureDateTime(departureDateTime);
-                flights.get(i).setArrivalDateTime(arrivalDateTime);
-                break;
-            }
-            else if(i+1 == flights.size())
-            {
-                /*
-                Doesn't require a break as this code executes at the final loop when there is no match
-                so there is no need to break early.
-                 */
-                Utilities.writeString("Flight ID: " + flightID + " Does not exist.");
-            }
-        }
+        //Set new values
+        flight.setFlightNumber(flightNumber);
+        flight.setDepartureAirport(departureAirport);
+        flight.setArrivalAirport(arrivalAirport);
+        flight.setDepartureDateTime(departureDateTime);
+        flight.setArrivalDateTime(arrivalDateTime);
     }
 
     //Delete flight
@@ -348,41 +417,46 @@ public class SystemManager
     {
         //Todo: prevent flight being deleted unless referenced booking is deleted first
 
-        String flightID = Utilities.readString("Enter flight ID: ");
+        //Get flight id
+        String flightID;
+        Flight flight;
 
-        for (int i = 0; i < flights.size(); i++)
+        do
         {
-            if(flights.get(i).getFlightID().equals(flightID))
-            {
-                //Delete from list
-                flights.remove(i);
-                break;
-            }
-            else if(i+1 == flights.size())
-            {
-                /*
-                Doesn't require a break as this code executes at the final loop when there is no match
-                so there is no need to break early.
-                 */
-                Utilities.writeString("Flight ID: " + flightID + " Does not exist.");
-            }
+            flightID = Utilities.readString("Enter flight id: ");
+            flight = checkFlightExists(flightID);
         }
+        while(flight == null); //if it doesn't exist keep asking for id
+
+       flights.remove(flight);
     }
     //</editor-fold>
 
     //<editor-fold desc="Route Functions">
+    //Route list to CSV
+    public void routeToCSV()
+    {
+        CsvExporter.writeRoutesToCsv(routes, "route.csv");
+    }
+
     //Add route
     public void addRoute()
     {
-        //Create empty route
-        Route route = new Route();
+        //Get route id
+        String routeId;
+
+        do
+        {
+            routeId = Utilities.readString("Enter route id: ");
+        }
+        while(checkRouteExists(routeId) != null); //if it exists keep asking for id
 
         //Get values for route
-        String routeID = Utilities.readString("Enter route ID: ");
         String routeName = Utilities.readString("Enter route name: ");
 
         //Set values for the empty route object
-        route.setRouteID(routeID);
+        Route route = new Route();
+        route.setRouteID(routeId);
         route.setRouteName(routeName);
 
         //Add route to list
@@ -392,75 +466,56 @@ public class SystemManager
     //View route details
     public void viewRoute()
     {
-        String routeID = Utilities.readString("Enter route ID: ");
+        //Get route id
+        String routeID;
+        Route route;
 
-        for (int i = 0; i < routes.size(); i++)
+        do
         {
-            if(routes.get(i).getRouteID().equals(routeID))
-            {
-                Utilities.writeString("Route ID: " + routes.get(i).getRouteID());
-                Utilities.writeString("Route Name: " + routes.get(i).getRouteName());
-                break;
-            }
-            else if(i+1 == routes.size())
-            {
-                /*
-                Doesn't require a break as this code executes at the final loop when there is no match
-                so there is no need to break early.
-                 */
-                Utilities.writeString("Route ID: " + routeID + " Does not exist.");
-            }
+            routeID = Utilities.readString("Enter route id: ");
+            route = checkRouteExists(routeID);
         }
+        while(route == null); //if it doesn't exist keep asking for id
+
+        Utilities.writeString("Route ID: " + route.getRouteID());
+        Utilities.writeString("Route Name: " + route.getRouteName());
     }
 
     //Update route
     public void updateRoute()
     {
+        //Get route id
+        String routeID;
+        Route route;
+
+        do
+        {
+            routeID = Utilities.readString("Enter route id: ");
+            route = checkRouteExists(routeID);
+        }
+        while(route == null); //if it doesn't exist keep asking for id
+
         //Get values for new route
-        String routeID = Utilities.readString("Enter existing route ID: ");
         String routeName = Utilities.readString("Enter route name: ");
 
-        for (int i = 0; i < routes.size(); i++)
-        {
-            if(routes.get(i).getRouteID().equals(routeID))
-            {
-                //Set new values
-                routes.get(i).setRouteName(routeName);
-                break;
-            }
-            else if(i+1 == routes.size())
-            {
-                /*
-                Doesn't require a break as this code executes at the final loop when there is no match
-                so there is no need to break early.
-                 */
-                Utilities.writeString("Route ID: " + routeID + " Does not exist.");
-            }
-        }
+        route.setRouteName(routeName);
     }
 
     //Delete route
     public void deleteRoute()
     {
-        String routeID = Utilities.readString("Enter route ID: ");
+        //Get route id
+        String routeID;
+        Route route;
 
-        for (int i = 0; i < routes.size(); i++)
+        do
         {
-            if(routes.get(i).getRouteID().equals(routeID))
-            {
-                //Delete from list
-                routes.remove(i);
-                break;
-            }
-            else if(i+1 == routes.size())
-            {
-                /*
-                Doesn't require a break as this code executes at the final loop when there is no match
-                so there is no need to break early.
-                 */
-                Utilities.writeString("Route ID: " + routeID + " Does not exist.");
-            }
+            routeID = Utilities.readString("Enter route id: ");
+            route = checkRouteExists(routeID);
         }
+        while(route == null); //if it doesn't exist keep asking for id
+
+        routes.remove(route);
     }
     //</editor-fold>
 }
