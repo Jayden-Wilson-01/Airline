@@ -34,6 +34,11 @@ public class Main
             Utilities.writeString("14. View route");
             Utilities.writeString("15. Update route");
             Utilities.writeString("16. Delete route");
+            Utilities.writeString("");
+            Utilities.writeString("17. Flights to CSV");
+            Utilities.writeString("18. Customers to CSV");
+            Utilities.writeString("19. Bookings to CSV");
+            Utilities.writeString("20. Routes to CSV");
 
             option = Utilities.readInt("Enter option: ");
 
@@ -89,6 +94,18 @@ public class Main
                     break;
                 case 16:
                     systemManager.deleteRoute();
+                    break;
+                case 17:
+                    systemManager.flightsToCSV();
+                    break;
+                case 18:
+                    systemManager.customersToCSV();
+                    break;
+                case 19:
+                    systemManager.bookingsToCSV();
+                    break;
+                case 20:
+                    systemManager.routeToCSV();
                     break;
                 default:
                     Utilities.writeString("Invalid option. Try again.\n");
