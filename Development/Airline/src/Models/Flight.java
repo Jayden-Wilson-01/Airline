@@ -47,10 +47,7 @@ public class Flight
     //<editor-fold desc="Set Functions">
     public void setFlightID(String flightID)
     {
-        if(Utilities.isNullOrWhiteSpace(this.flightID))
-        {
-            this.flightID = flightID;
-        }
+        this.flightID = flightID;
     }
 
     public void setFlightNumber(String flightNumber)

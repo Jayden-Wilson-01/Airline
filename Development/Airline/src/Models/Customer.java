@@ -47,10 +47,7 @@ public class Customer
     only if it hasn't already been set.*/
     public void setCustomerID(String customerID)
     {
-        if(Utilities.isNullOrWhiteSpace(this.customerID))
-        {
-            this.customerID = customerID;
-        }
+        this.customerID = customerID;
     }
 
     public void setFirstName(String firstName)

@@ -34,10 +34,7 @@ public class Booking
     //<editor-fold desc="Set Functions">
     public void setBookingID(String bookingID)
     {
-        if(Utilities.isNullOrWhiteSpace(this.bookingID))
-        {
-            this.bookingID = bookingID;
-        }
+        this.bookingID = bookingID;
     }
 
     public void setBookingDate(Date bookingDate)
@@ -47,18 +44,12 @@ public class Booking
 
     public void setCustomerID(String customerID)
     {
-        if(Utilities.isNullOrWhiteSpace(this.customerID))
-        {
-            this.customerID = customerID;
-        }
+        this.customerID = customerID;
     }
 
     public void setFlightID(String flightID)
     {
-        if(Utilities.isNullOrWhiteSpace(this.flightID))
-        {
-            this.flightID = flightID;
-        }
+        this.flightID = flightID;
     }
 
     //</editor-fold>
