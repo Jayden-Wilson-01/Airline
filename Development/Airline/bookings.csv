@@ -1,0 +1,4 @@
+FlightID,FlightNumber,DepartureAirport,ArrivalAirport,DepartureDateTime,ArrivalDateTime
+booking1,Tue Jan 14 00:00:00 GMT 2025,customer1,flight1
+c1,Sun Jan 12 00:00:00 GMT 2025,customer2,flight1
+booking3,Wed Feb 19 00:00:00 GMT 2025,customer2,flight2
