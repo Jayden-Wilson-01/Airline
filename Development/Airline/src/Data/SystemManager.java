@@ -123,8 +123,13 @@ public class SystemManager
 
         do
         {
-            customerID = Utilities.readString("Enter customer id: ");
+            customerID = Utilities.readString("Enter customer id, 0 to cancel: ");
             customer = checkCustomerExists(customerID);
+
+            if(customerID.equals("0"))
+            {
+                return;
+            }
         }
         while(customer == null); //if it doesn't exist keep asking for id
 
@@ -146,8 +151,13 @@ public class SystemManager
 
         do
         {
-            customerID = Utilities.readString("Enter customer id: ");
+            customerID = Utilities.readString("Enter customer id, 0 to cancel: ");
             customer = checkCustomerExists(customerID);
+
+            if(customerID.equals("0"))
+            {
+                return;
+            }
         }
         while(customer == null); //if it doesn't exist keep asking for id
 
@@ -167,16 +177,19 @@ public class SystemManager
 
     public void deleteCustomer()
     {
-        //Todo: prevent customer being deleted unless referenced booking is deleted first
-
         //Get customer id
         String customerID;
         Customer customer;
 
         do
         {
-            customerID = Utilities.readString("Enter customer id: ");
+            customerID = Utilities.readString("Enter customer id, 0 to cancel: ");
             customer = checkCustomerExists(customerID);
+
+            if(customerID.equals("0"))
+            {
+                return;
+            }
         }
         while(customer == null); //if it doesn't exist keep asking for id
 
@@ -207,8 +220,13 @@ public class SystemManager
         Customer customer;
         do
         {
-            customerID = Utilities.readString("Enter customer id: ");
+            customerID = Utilities.readString("Enter customer id, 0 to cancel: ");
             customer = checkCustomerExists(customerID);
+
+            if(customerID.equals("0"))
+            {
+                return;
+            }
         }
         while(customer == null); //if it doesn't exist keep asking for id
 
@@ -217,8 +235,13 @@ public class SystemManager
         Flight flight;
         do
         {
-            flightId = Utilities.readString("Enter flight id: ");
+            flightId = Utilities.readString("Enter flight id, 0 to cancel: ");
             flight = checkFlightExists(flightId);
+
+            if(flightId.equals("0"))
+            {
+                return;
+            }
         }
         while(flight == null); //if it doesn't exist keep asking for id
 
@@ -240,8 +263,13 @@ public class SystemManager
 
         do
         {
-            bookingId = Utilities.readString("Enter booking id: ");
+            bookingId = Utilities.readString("Enter booking id, 0 to cancel: ");
             booking = checkBookingExists(bookingId);
+
+            if(bookingId.equals("0"))
+            {
+                return;
+            }
         }
         while(booking == null); //if it doesn't exist keep asking for id
 
@@ -260,8 +288,13 @@ public class SystemManager
         Booking booking;
         do
         {
-            bookingID = Utilities.readString("Enter booking id: ");
+            bookingID = Utilities.readString("Enter booking id, 0 to cancel: ");
             booking = checkBookingExists(bookingID);
+
+            if(bookingID.equals("0"))
+            {
+                return;
+            }
         }
         while(booking == null); //if it doesn't exist keep asking for id
 
@@ -270,8 +303,13 @@ public class SystemManager
         Customer customer;
         do
         {
-            customerID = Utilities.readString("Enter customer id: ");
+            customerID = Utilities.readString("Enter customer id, 0 to cancel: ");
             customer = checkCustomerExists(customerID);
+
+            if(customerID.equals("0"))
+            {
+                return;
+            }
         }
         while(customer == null); //if it doesn't exist keep asking for id
 
@@ -280,8 +318,13 @@ public class SystemManager
         Flight flight;
         do
         {
-            flightId = Utilities.readString("Enter flight id: ");
+            flightId = Utilities.readString("Enter flight id, 0 to cancel: ");
             flight = checkFlightExists(flightId);
+
+            if(flightId.equals("0"))
+            {
+                return;
+            }
         }
         while(flight == null); //if it doesn't exist keep asking for id
 
@@ -300,8 +343,13 @@ public class SystemManager
         Booking booking;
         do
         {
-            bookingID = Utilities.readString("Enter booking id: ");
+            bookingID = Utilities.readString("Enter booking id, 0 to cancel: ");
             booking = checkBookingExists(bookingID);
+
+            if(bookingID.equals("0"))
+            {
+                return;
+            }
         }
         while(booking == null); //if it doesn't exist keep asking for id
 
@@ -337,7 +385,7 @@ public class SystemManager
 
         do
         {
-            arrivalDateTime = Utilities.readDate("Enter arrival date thats after departure date: ");
+            arrivalDateTime = Utilities.readDate("Enter arrival date that's on or after departure date: ");
         }
         while(arrivalDateTime.before(departureDateTime));
 
@@ -363,8 +411,13 @@ public class SystemManager
 
         do
         {
-            flightID = Utilities.readString("Enter flight id: ");
+            flightID = Utilities.readString("Enter flight id, 0 to cancel: ");
             flight = checkFlightExists(flightID);
+
+            if(flightID.equals("0"))
+            {
+                return;
+            }
         }
         while(flight == null); //if it doesn't exist keep asking for id
 
@@ -385,8 +438,13 @@ public class SystemManager
 
         do
         {
-            flightID = Utilities.readString("Enter flight id: ");
+            flightID = Utilities.readString("Enter flight id, 0 to cancel: ");
             flight = checkFlightExists(flightID);
+
+            if(flightID.equals("0"))
+            {
+                return;
+            }
         }
         while(flight == null); //if it doesn't exist keep asking for id
 
@@ -400,7 +458,7 @@ public class SystemManager
 
         do
         {
-            arrivalDateTime = Utilities.readDate("Enter arrival date: ");
+            arrivalDateTime = Utilities.readDate("Enter arrival date that's on or after departure date:  ");
         }
         while(arrivalDateTime.before(departureDateTime));
 
@@ -415,16 +473,19 @@ public class SystemManager
     //Delete flight
     public void deleteFlight()
     {
-        //Todo: prevent flight being deleted unless referenced booking is deleted first
-
         //Get flight id
         String flightID;
         Flight flight;
 
         do
         {
-            flightID = Utilities.readString("Enter flight id: ");
+            flightID = Utilities.readString("Enter flight id, 0 to cancel: ");
             flight = checkFlightExists(flightID);
+
+            if(flightID.equals("0"))
+            {
+                return;
+            }
         }
         while(flight == null); //if it doesn't exist keep asking for id
 
@@ -472,8 +533,13 @@ public class SystemManager
 
         do
         {
-            routeID = Utilities.readString("Enter route id: ");
+            routeID = Utilities.readString("Enter route id, 0 to cancel: ");
             route = checkRouteExists(routeID);
+
+            if(routeID.equals("0"))
+            {
+                return;
+            }
         }
         while(route == null); //if it doesn't exist keep asking for id
 
@@ -490,8 +556,13 @@ public class SystemManager
 
         do
         {
-            routeID = Utilities.readString("Enter route id: ");
+            routeID = Utilities.readString("Enter route id, 0 to cancel: ");
             route = checkRouteExists(routeID);
+
+            if(routeID.equals("0"))
+            {
+                return;
+            }
         }
         while(route == null); //if it doesn't exist keep asking for id
 
@@ -510,8 +581,13 @@ public class SystemManager
 
         do
         {
-            routeID = Utilities.readString("Enter route id: ");
+            routeID = Utilities.readString("Enter route id, 0 to cancel: ");
             route = checkRouteExists(routeID);
+
+            if(routeID.equals("0"))
+            {
+                return;
+            }
         }
         while(route == null); //if it doesn't exist keep asking for id
 
